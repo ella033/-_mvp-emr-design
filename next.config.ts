@@ -90,10 +90,12 @@ const nextConfig = {
   },
   // =====프록시 설정=====
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_APP_API_URL;
+    if (!apiUrl) return [];
     return [
       {
         source: `${config.apiProxyPath}/:path*`,
-        destination: `${process.env.NEXT_PUBLIC_APP_API_URL}/:path*`,
+        destination: `${apiUrl}/:path*`,
       },
     ];
   },
