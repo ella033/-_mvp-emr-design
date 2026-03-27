@@ -18,20 +18,20 @@ import {
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { icon: Home, label: "홈", active: false, href: "/home" },
-  { icon: ClipboardList, label: "접수", active: false },
-  { icon: Stethoscope, label: "진료", active: true },
-  { icon: FlaskConical, label: "수탁 검사", active: false },
-  { icon: CalendarDays, label: "예약", active: false },
-  { icon: Users, label: "CRM", active: false },
-  { icon: Receipt, label: "청구", active: false },
-  { icon: FileText, label: "서식", active: false },
-  { icon: Database, label: "기초자료", active: false },
-  { icon: BarChart3, label: "통계", active: false },
-  { icon: Settings, label: "설정", active: false },
+  { icon: Home, label: "홈", href: "/home" },
+  { icon: ClipboardList, label: "접수" },
+  { icon: Stethoscope, label: "진료", href: "/medical-v2" },
+  { icon: FlaskConical, label: "수탁 검사" },
+  { icon: CalendarDays, label: "예약" },
+  { icon: Users, label: "CRM" },
+  { icon: Receipt, label: "청구" },
+  { icon: FileText, label: "서식" },
+  { icon: Database, label: "기초자료" },
+  { icon: BarChart3, label: "통계" },
+  { icon: Settings, label: "설정" },
 ];
 
-export default function CollapsedSidebar() {
+export default function CollapsedSidebar({ activePage = "진료" }: { activePage?: string }) {
   return (
     <div className="flex w-[50px] flex-col items-center bg-[#eef0f8] border-r border-[#c2c4c8] px-[4px] pb-[4px]">
       {/* Toggle button */}
@@ -45,13 +45,13 @@ export default function CollapsedSidebar() {
           <button
             key={item.label}
             className={`flex w-full items-center justify-center rounded-[6px] p-[12px] transition-colors ${
-              item.active
+              item.label === activePage
                 ? "bg-[#453EDC] text-white"
                 : "text-[#46474c] hover:bg-[#dde0eb]"
             }`}
             title={item.label}
             onClick={() => {
-              if ((item as any).href) window.location.href = (item as any).href;
+              if (item.href) window.location.href = item.href;
             }}
           >
             <item.icon className="h-[20px] w-[20px]" />
