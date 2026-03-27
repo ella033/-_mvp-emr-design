@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import CollapsedSidebar from "../medical-v2/_components/collapsed-sidebar";
 import DashboardHeader from "./_components/dashboard-header";
 import KpiCards from "./_components/kpi-cards";
 import AiAlertList from "./_components/ai-alert-list";
@@ -16,9 +15,6 @@ export default function HomePage() {
 
   return (
     <div className="flex h-screen w-full bg-[#F8F9FA]">
-      {/* LNB */}
-      <CollapsedSidebar activePage="홈" />
-
       {/* Main Content */}
       <div className="flex flex-1 flex-col min-w-0 overflow-y-auto">
         {/* Header */}
