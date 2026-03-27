@@ -29,7 +29,7 @@ export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 디자인 프리뷰 페이지는 인증 없이 접근 허용
-  if (pathname.startsWith("/medical-v2")) {
+  if (pathname.startsWith("/medical-v2") || pathname.startsWith("/home")) {
     const response = NextResponse.next();
     response.headers.set("x-pathname", pathname);
     return response;

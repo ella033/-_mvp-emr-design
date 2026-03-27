@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { icon: Home, label: "홈", active: false },
+  { icon: Home, label: "홈", active: false, href: "/home" },
   { icon: ClipboardList, label: "접수", active: false },
   { icon: Stethoscope, label: "진료", active: true },
   { icon: FlaskConical, label: "수탁 검사", active: false },
@@ -50,6 +50,9 @@ export default function CollapsedSidebar() {
                 : "text-[#46474c] hover:bg-[#dde0eb]"
             }`}
             title={item.label}
+            onClick={() => {
+              if ((item as any).href) window.location.href = (item as any).href;
+            }}
           >
             <item.icon className="h-[20px] w-[20px]" />
           </button>
