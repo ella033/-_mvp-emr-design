@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>        
+		<link rel="stylesheet" href="C:\ysr_framework\Ysr.Framework\Ysr.Count.Main\bin\Debug\Engine\Print\Html\Css\Document.css" />
+        <style type="text/css">	
+            * {
+                margin: 0;
+                padding: 0mm;
+                text-indent: 0;
+            }            
+            .s1 {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 15pt;
+            }
+            .s2 {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 12pt;
+                vertical-align: 1pt;
+            }
+            .s3 {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 12pt;
+                vertical-align: 1pt;
+            }
+            p {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+                margin: 0pt;
+            }
+            .columnTitleText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;								
+				text-align: center;				
+            }
+            .columnPriceTitleText {
+                color: black;
+                font-family: 새굴림, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+				text-align: center;				
+            }
+            .columnPriceTitleSmallText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 6pt;
+				text-align: center;
+            }            
+			.columnPriceValueText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+				text-align: right;				
+				padding-right: 2pt;
+            }     	
+			.columnPriceSummaryValueText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+				text-align: right;				
+				padding-right: 5pt;
+            }     				
+			.columnStringValueText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+				text-align: center;								
+            }		
+			.columnInformationValueText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 7.5pt;
+				text-align: left;
+				padding-right: 10pt; 
+				text-indent: -6pt;
+            }		
+			.columnPriceNumberText {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+				text-align: left;
+				padding-left: 1pt;
+            }			
+            .s8 {
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+            }			
+			td{
+				border-top-style: solid;
+                border-top-width: 1pt;
+                border-left-style: solid;
+                border-left-width: 1pt;
+                border-bottom-style: solid;
+                border-bottom-width: 1pt;
+                border-right-style: solid;
+                border-right-width: 1pt;
+			}			
+            li {
+                display: block;
+            }
+            #l1 {
+                padding-left: 0pt;
+                counter-reset: c1 1;
+            }
+            #l1 > li > *:first-child:before {
+                counter-increment: c1;
+                content: counter(c1, decimal) ". ";
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+            }
+            #l1 > li:first-child > *:first-child:before {
+                counter-increment: c1 0;
+            }
+            #l2 {
+                padding-left: 0pt;
+            }
+            #l2 > li > *:first-child:before {
+                content: "- ";
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+            }
+            li {
+                display: block;
+            }
+            #l3 {
+                padding-left: 0pt;
+                counter-reset: d1 2;
+            }
+            #l3 > li > *:first-child:before {
+                counter-increment: d1;
+                content: counter(d1, decimal) ". ";
+                color: black;
+                font-family: 바탕체, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+            }
+            #l3 > li:first-child > *:first-child:before {
+                counter-increment: d1 0;
+            }
+            li {
+                display: block;
+            }
+            #l4 {
+                padding-left: 0pt;
+                counter-reset: e1 1;
+            }
+            #l4 > li > *:first-child:before {
+                counter-increment: e1;
+                content: counter(e1, decimal) ". ";
+                color: black;
+                font-family: 새굴림, serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+            }
+            #l4 > li:first-child > *:first-child:before {
+                counter-increment: e1 0;
+            }
+            table,
+            tbody {
+                vertical-align: center;
+                overflow: visible;
+            }
+        </style>
+    </head>
+    <body>
+	<div>
+		<div class="A4">
+			<div class="space-between" style="width: 174mm; margin-top: 18mm; margin-left: 33mm; display: inline-flex;">	
+			<p class="s2" style="text-indent: 0pt; text-align: center;">
+				<span class="s1">[ ] 외래 [ ]입원 </span>(<span class="s3">[ ]퇴원[ ] 중간) <span class="s1">진료비 계산서·영수증</span>
+			</p>
+			</div>
+			<p style="text-indent: 0pt; text-align: left;"><br /></p>
+			<p style="padding-left: 13mm; text-indent: 0pt; text-align: left;">[별지 제 6호서식]</p>
+			<p style="font-size: 4pt"><br /></p>
+			<table style="border-collapse: collapse; margin-left: 13mm; margin-right: 13mm" cellspacing="0">
+				<tr style="height: 15pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnTitleText">환자등록번호</p>
+					</td>
+					<td style="width:147pt;" colspan="3">
+						<p class="columnTitleText">환자 성명</p>
+					</td>
+					<td style="width: 182pt;" colspan="4">
+						<p class="columnTitleText">진료기간</p>
+					</td>
+					<td style="width: 113pt;">
+						<p class="columnTitleText">야간(공휴일)진료</p>
+					</td>
+				</tr>
+				<tr style="height: 15pt;">
+					<td	style="width: 93pt;" colspan="3">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td	style="width: 147pt;" colspan="3">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 182pt;" colspan="4">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnStringValueText"><span class="columnTitleText">[ ]야간&nbsp;[ ]공휴일</span></p>					
+					</td>                                
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 93pt;"colspan="3">
+						<p class="columnTitleText" >진료과목</p>
+					</td>
+					<td style="width: 147pt;" colspan="3">
+						<p class="columnTitleText" >질병군(DRG)번호</p>
+					</td>
+					<td style="width: 64pt;"colspan="2">
+						<p class="columnTitleText" >병실</p>
+					</td>
+					<td style="width: 80pt;" colspan="1">
+						<p class="columnTitleText" >환자구분</p>
+					</td>
+					<td style="width: 151pt;" colspan="2">
+						<p class="columnTitleText" >영수증번호(연월-일련번호)</p>
+					</td>
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 147pt;" colspan="3">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 64pt;" colspan="2">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 80pt;">
+						<p class="columnStringValueText"></p>
+					</td>
+					<td style="width: 151pt;"	colspan="2">
+						<p class="columnStringValueText"></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;" colspan="3" rowspan="3">						
+						<p class="columnTitleText">항목</p>
+					</td>
+					<td style="width: 147pt;" colspan="3">
+						<p class="columnTitleText" style="line-height: 9pt; ">급여</p>
+					</td>
+					<td style="width: 98pt;" colspan="2">
+						<p class="columnTitleText" style="line-height: 9pt;">비급여</p>
+					</td>
+					<td style="width: 197pt;" colspan="3">
+						<p class="columnTitleText" style="line-height: 9pt;">금액산정내용</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 98pt;" colspan="2">
+						<p class="columnTitleText" style="line-height: 9pt; ">일부 본인부담</p>
+					</td>
+					<td style="width: 49pt;" rowspan="2">
+						<p class="columnTitleText" style="line-height: 11pt; text-align: center;">
+							<span>
+								전액<br />
+								본인부담
+							</span>
+						</p>
+					</td>
+					<td style="width: 49pt;" rowspan="2">
+						<p class="columnTitleText" style="line-height: 11pt;">
+							<span>
+								선택<br />
+								진료료
+							</span>
+						</p>
+					</td>
+					<td style="width: 49pt;" rowspan="2">
+						<p class="columnTitleText" style="line-height: 11pt; font-size:7.5pt">
+							<span>
+								선택진료료<br />
+								이외
+							</span>
+						</p>
+					</td>
+					<td style="width: 115pt;" colspan="2" rowspan="2">
+						<p class="columnTitleText">
+							<span>
+								⑦ 진료비 총액<br />
+								(①+②+③+④+⑤)
+							</span>
+						</p>
+					</td>
+					<td style="width: 82pt;" rowspan="2">
+						<p class="columnPriceSummaryValueText">12,350</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 49pt;">
+						<p class="columnTitleText" style="line-height: 9pt;">본인부담금</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnTitleText" style="line-height: 9pt;">공단부담금</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 18pt;" rowspan="16">						
+						<p class="columnTitleText" style="text-indent: 0pt; line-height: 117%;">
+							<span>							
+								기<br />
+								본<br />
+								항<br />
+								목
+							</span>
+						</p>
+					</td>
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">진 찰 료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B01]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G01]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A01]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C01]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E01]</p>
+					</td>
+					<td style="width: 115pt;" colspan="2" rowspan="2">
+						<p class="columnTitleText">
+							<span>
+								⑧ 환자부담 총액<br />
+								(①-⑥)+③+④+⑤
+							</span>
+						</p>
+					</td>
+					<td style="width: 82pt;" rowspan="2">
+						<p class="columnPriceSummaryValueText">3,250</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">입 원 료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B02]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G02]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A02]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C02]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E02]</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;"colspan="2">
+						<p class="columnPriceTitleText">식대</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B21]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G21]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A21]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C21]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E21]</p>
+					</td>                
+					<td style="width: 115pt;" colspan="2"rowspan="2">                    
+						<p class="columnTitleText">⑨ 이미 납부한 금액</p>
+					</td>
+					<td style="width: 82pt;" rowspan="2">
+						<p class="columnPriceSummaryValueText">11,111</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 38pt;" rowspan="2">
+						<p class="columnPriceTitleSmallText">
+							<span>
+								투약 및<br />
+								조제료
+							</span>
+						</p>
+					</td>
+					<td style="width: 37pt;">
+						<p class="columnPriceTitleText">행위료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B03_Act]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G03_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A03_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C03_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E03_Act]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 37pt;">
+						<p class="columnPriceTitleText">약품비</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B03]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G03]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A03]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C03]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E03]</p>
+					</td>                                    
+					<td style="width: 115pt;" colspan="2" rowspan="2">
+						<p class="columnTitleText">
+							<span>
+								⑩ 납부할 금액<br />
+								(⑧-⑨)
+							</span>
+						</p>
+					</td>							
+					<td style="width: 82pt;" rowspan="2">
+						<p class="columnPriceSummaryValueText">3,250</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 38pt;" rowspan="2">                    
+						<p class="columnTitleText">주사료</p>
+					</td>
+					<td style="width: 37pt;">
+						<p class="columnPriceTitleText">행위료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B05_Act]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G05_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A05_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C05_Act]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C05_Act]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 37pt;">
+						<p class="columnPriceTitleText">약품비</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B05]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G05]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A05]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C05]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E05]</p>
+					</td>                                    
+					<td style="width: 36pt;" rowspan="4">                    
+						<p class="columnTitleText">
+							<span>
+								⑪ 납부한 금액
+							</span>
+						</p>
+					</td>
+					<td style="width: 50pt;">
+						<p class="columnTitleText" style="line-height: 9pt; ">카드</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">마취료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B06]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G06]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A06]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C06]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E06]</p>
+					</td>                                                    
+					<td style="width: 79pt;">
+						<p class="columnTitleText" style="line-height: 10pt;">현금영수증</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">처치 및 수술료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B09]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G09]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A09]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C09]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E09]</p>
+					</td>                                                    
+					<td style="width: 79pt;">
+						<p class="columnTitleText" style="text-align: center;">현금</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">검사료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B11]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G11]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A11]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C11]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E11]</p>
+					</td>                  
+					<td style="width: 79pt;">
+						<p class="columnTitleText">합계</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 13pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">영상진단료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B13]</p>					
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G13]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A13]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C13]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E13]</p>
+					</td>                  
+					<td style="width: 115pt;" colspan="2">
+						<p class="columnTitleText" style="line-height: 9pt;">납부하지 않은 금액(⑩-⑪)</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">방사선치료료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B20]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G20]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A20]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C20]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E20]</p>
+					</td>                  
+					<td style="width: 197pt;" colspan="3">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">치료재료대</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B10]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G10]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A10]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C10]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E10]</p>
+					</td>                    
+					<td style="width: 115pt;" colspan="2">
+						<p class="columnTitleText" style="line-height: 10pt; ">신분확인번호</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleSmallText">재활 및 물리치료료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B07]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G07]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A07]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C07]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E07]</p>
+					</td>                    
+					<td style="width: 115pt;" colspan="2">
+						<p class="columnTitleText">현금승인번호</p>
+					</td>
+					<td style="width: 82pt;">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">정신요법료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B08]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G08]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A08]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C08]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E08]</p>
+					</td>    
+					<td style="width: 197pt; vertical-align: top;" colspan="3" rowspan="12">
+						<p class="columnTitleText" style="text-indent: 0pt; text-align: left;">* 요양기관 임의활용공간</p>						
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleSmallText" style="font-size: 5pt;">전혈 및 혈액성분제제료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B22]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G22]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A22]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C22]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E22]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 18pt;" rowspan="6">                    
+						<p class="columnPriceTitleText" style="text-indent: 0pt; line-height: 117%">
+							<span>							
+								선<br />
+								택<br />
+								항<br />
+								목
+							</span>
+						</p>
+					</td>
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">CT 진단료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B14]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G14]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A14]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C14]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E14]</p>
+					</td>    
+				</tr>
+				<tr style="height: 13pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">MRI 진단료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B15]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G15]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A15]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C15]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E15]</p>
+					</td>    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">PET 진단료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B19]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G19]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A19]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C19]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E19]</p>
+					</td>    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleText">초음파진단료</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B16]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G16]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A16]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C16]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E16]</p>
+					</td>    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;" colspan="2">
+						<p class="columnPriceTitleSmallText">보철ㆍ교정료ㆍ기타</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B17]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G17]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A17]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C17]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E17]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 75pt;"colspan="2">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[Betc]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[Getc]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[Aetc]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[Cetc]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[Eetc]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnPriceTitleText">65세 이상 등 정액</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B_DEF]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G_DEF]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A_DEF]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C_DEF]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E_DEF]</p>
+					</td>    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;"colspan="3">
+						<p class="columnPriceTitleText">정액수가(요양병원)</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B18]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G18]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A18]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C18]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E18]</p>
+					</td>                    
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnPriceTitleText">포괄수가진료비</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[B_DRG]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[G_DRG]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[A_DRG]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[C_DRG]</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceValueText">[E_DRG]</p>
+					</td>                 
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnPriceTitleText">합계</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceNumberText">①</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceNumberText">②</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceNumberText">③</p>
+					</td>
+					<td style="width: 48pt;">
+						<p class="columnPriceNumberText">④</p>
+					</td>
+					<td style="width: 50pt;">
+						<p class="columnPriceNumberText">⑤</p>
+					</td>
+				</tr>
+				<tr style="height: 12pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnPriceTitleText">상한액 초과금</p>
+					</td>
+					<td style="width: 49pt;">
+						<p class="columnPriceNumberText">⑥</p>
+					</td>
+					<td style="width: 98pt;"colspan="2">
+						<p class="columnPriceValueText"></p>
+					</td>
+					<td style="width: 98pt;"colspan="2">
+						<p class="columnPriceValueText"></p>
+					</td>				
+					<td style="width: 76pt;" colspan="2">
+						<p class="columnPriceTitleText">선택진료 신청</p>
+					</td>
+					<td style="width: 57pt;       ">
+						<p class="columnPriceTitleText">[ ] 유&nbsp;&nbsp;&nbsp;[ ] 무</p>
+					</td>                                
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnPriceTitleText">요양기관 종류</p>
+					</td>
+					<td style="width: 442pt;" colspan="8">
+						<p class="columnPriceTitleText" style="padding-left: 3pt; text-align: left;">[ ] 의원급ㆍ보건기관 &nbsp;&nbsp;&nbsp;[ ] 병원급 &nbsp;&nbsp;&nbsp;[ ] 종합병원 &nbsp;&nbsp;&nbsp;[ ] 상급종합병원</p>
+					</td>
+				</tr>
+				<tr style="height: 16pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnTitleText" >사업자등록번호</p>
+					</td>
+					<td style="width: 98pt;"colspan="2">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+					<td style="width: 30pt;">
+						<p class="columnTitleText">상호</p>
+					</td>
+					<td style="width: 114pt;" colspan="3">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+					<td style="width: 64pt;">
+						<p class="columnTitleText">전화번호</p>
+					</td>
+					<td style="width: 64pt;">
+						<p class="columnPriceTitleText" style="padding-left: 14pt; text-align: left;"></p>
+					</td>				
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 93pt;" colspan="3">
+						<p class="columnTitleText">사업장 소재지</p>
+					</td>
+					<td style="width: 245pt;" colspan="6">
+						<p class="columnStringValueText" style="padding-left: 2pt; text-align:left;">ㅁㅁㅁ</p>
+					</td>
+					<td style="width: 76pt;">
+						<p class="columnTitleText">대표자</p>
+					</td>
+					<td style="width: 121pt;">
+						<p class="columnStringValueText" style="padding-right: 13pt; text-align: right;">[인]</p>
+					</td>
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 535pt;" colspan="11">
+						<p class="columnPriceValueText"><br /></p>
+					</td>
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 294pt;" colspan="8">
+						<p class="columnTitleText" style="line-height: 10pt;">항목별 설명</p>
+					</td>
+					<td style="width: 241pt;" colspan="3">
+						<p class="columnTitleText" style="line-height: 10pt;">일반사항 안내</p>
+					</td>
+				</tr>
+				<tr style="height: 151pt;">
+					<td style="width: 294pt;" colspan="8">
+						<ol id="l1">
+							<li data-list-text="1.">
+								<p class="columnInformationValueText" style="padding-left: 19pt;">
+									<span>
+										일부 본인부담 : 일반적으로 다음과 같이 본인부담률을 적용하나, 요양기관 지역, 요양기관의 종별, 환자 자격 등에 따라 달라질 수 있습니다.
+									</span>
+								</p>
+								<ul id="l2">
+									<li data-list-text="-">
+										<p class="columnInformationValueText" style="padding-left: 22pt;">
+											<span>
+												외래 본인부담률 : 요양기관 종별에 따라 30%~60%(의료급여는 수급권자 종별 및 의료급여기관 유형등에 따라 0원~2500원, 0%~15%) 등
+											</span>
+										</p>
+									</li>
+									<li data-list-text="-">
+										<p class="columnInformationValueText" style="padding-left: 22pt;">
+											<span>
+												입원 본인부담률 : 20%(의료급여는 수급권자 종별 및 의료급여기관 유형 등에 따라 0%~10%) 등
+											</span>
+										</p>
+									</li>
+								</ul>
+							</li>
+						</ol>
+						<p class="columnInformationValueText" style="padding-left: 16pt; text-indent: 0pt;">※ 식대 : 50%(의료급여는 20%)</p>
+						<p class="columnInformationValueText" style="padding-left: 22pt; text-indent: 0pt;">CT·MRI·PET : 외래 본인부담률(의료급여는 입원 본인부담률과 동일)</p>
+						<ol id="l3">
+							<li data-list-text="2.">
+								<p class="columnInformationValueText" style="padding-left: 19pt;">
+									<span>
+										전액 본인부담 :「국민건강보험법 시행규칙」별표5 또는 「의료급여법 시행규칙」별표 1의 2에 따라 적용되는 항목으로 건강보험(의료급여)에서 금액을 정하고 있으나 진료비 전액을 환자 본인이 부담합니다.
+									</span>
+								</p>
+							</li>
+							<li data-list-text="3."><p class="columnInformationValueText" style="padding-left: 20pt; line-height: 10pt;">상한액 초과금 : 본인부담액 상한제에 따라 같은 의료기관에서 연간 10,140,000원(환자 자격 등에 따라 다를 수 있음) 이상 본인부담금이 발생한 경우 공단이 부담하는 초과분 중 사전 정산하는 금액을 말합니다.</p></li>
+						</ol>                    
+					</td>
+					<td style=" width: 241pt;"colspan="3">
+						<ol id="l4">
+							<li data-list-text="1.">
+								<p class="columnInformationValueText" style="padding-left: 15pt;">
+									<span>
+										이 계산서ㆍ영수증에 대한 세부내용은 요양기관에 요구하여 제공받을 수 있습니다. 
+									</span>
+								</p>
+							</li>
+							<li data-list-text="2.">
+								<p class="columnInformationValueText" style="padding-left: 15pt; line-height: 10pt;">「국민건강보험법」제43조의2 또는 「의료급여법」</p>
+								<p class="columnInformationValueText" style="padding-left: 15pt; text-indent: 0pt; ">
+									<span>
+										제 11조의 3에 따라 환자가 전액 부담한 비용과 비급여
+										로 부담한 비용의 타당성 여부를 건강보험심사평가원
+										(☏1644-2000, 홈페이지 : www.hira.or.kr)에 확인 요청
+										하실 수 있습니다.
+									</span>
+								</p>
+							</li>
+							<li data-list-text="3.">
+								<p class="columnInformationValueText" style="padding-left: 15pt;">
+									<a href="http://현금영/" class="s8" target="_blank">
+										계산서·영수증은「소득세법」에 따른 의료비 공제신청 또는 「조세특례제한법」에 따른 현금영수증 공제신청
+										(현금영수증 승인번호가 적힌 경우만 해당합니다)에 사
+										용할 수 있습니다. 다만, 지출증빙용으로 발급된 &quot;현금
+										영수증(지출증빙)&quot;은 공제신청에 사용할 수 없습니다.
+										(현금영수증 문의 126 인터넷 홈페이지 :
+									</a>
+									<span>
+										http://현금영수증.kr)
+									</span>
+								</p>
+							</li>
+						</ol>
+					</td>
+				</tr>
+				<tr style="height: 15pt;">
+					<td style="width: 56pt;        " colspan="11">
+						<p class="columnTitleText" style="padding-left: 14pt;text-align: left;">주(註) : 진료항목 중 선택항목은 요양기관의 특성에 따라 추가 또는 생략할 수 있습니다.</p>
+					</td>                                
+				</tr>
+			</table>        
+				<p style="padding-top: 4pt; padding-right: 13mm; text-align: right;">210mm X 297mm[보존용지(2종) 70g/m²]</p>
+		</div>
+	</div>
+    </body>	
+</html>

@@ -1,0 +1,1 @@
+export { ConsentRequestCard } from './consent-request-card';

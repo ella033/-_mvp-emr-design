@@ -1,0 +1,413 @@
+// @ts-nocheck
+import classNames from "classnames";
+import { groupClassNames } from "../Utils";
+
+export type DragType = "left" | "right" | "touch";
+
+export interface DragDropComponent {
+  element: HTMLElement | null;
+  ownerDocument: Document | null;
+  dragType: DragType | null;
+  baseX: number;
+  baseY: number;
+  scaleX: number;
+  scaleY: number;
+}
+
+export class DragState {
+  _init: boolean;
+  event: MouseEvent | TouchEvent;
+  component: DragDropComponent;
+  pageX = 0;
+  pageY = 0;
+  clientX = 0;
+  clientY = 0;
+  dx = 0;
+  dy = 0;
+  dropped: any = false;
+
+  constructor(
+    event: MouseEvent | TouchEvent | undefined,
+    component: DragDropComponent,
+    init = false
+  ) {
+    this.event = event || ({} as MouseEvent);
+    this.component = component;
+    this._init = init;
+    if (event) {
+      if (event.type.startsWith("touch")) {
+        let touch: Touch;
+        if (event.type === "touchend") {
+          touch = (event as TouchEvent).changedTouches[0];
+        } else {
+          touch = (event as TouchEvent).touches[0];
+        }
+
+        this.pageX = touch.pageX;
+        this.pageY = touch.pageY;
+        this.clientX = touch.clientX;
+        this.clientY = touch.clientY;
+      } else if ("pageX" in event) {
+        this.pageX = event.pageX;
+        this.pageY = event.pageY;
+        this.clientX = event.clientX;
+        this.clientY = event.clientY;
+      }
+      this.dx = (this.pageX - component.baseX) * component.scaleX;
+      this.dy = (this.pageY - component.baseY) * component.scaleY;
+    }
+  }
+
+  moved(): boolean {
+    return Math.abs(this.dx) >= 1 || Math.abs(this.dy) >= 1;
+  }
+
+  /**
+   * @param refElement, the element being moved
+   * @param draggingHtml, the element show in the dragging layer
+   */
+  startDrag(refElement?: HTMLElement, draggingHtml?: HTMLElement | string) {
+    if (!this._init) {
+      throw new Error("startDrag can only be used in onDragStart callback");
+    }
+    if (refElement === undefined) {
+      refElement = this.component.element || undefined;
+    }
+    if (!refElement || !this.component.ownerDocument) {
+      return;
+    }
+
+    createDraggingElement(this, refElement, draggingHtml);
+    this.component.ownerDocument.body.classList.add("dock-dragging");
+  }
+
+  setData(data?: { [key: string]: any }, scope?: any) {
+    if (!this._init) {
+      throw new Error("setData can only be used in onDragStart callback");
+    }
+    _dataScope = scope;
+    _data = data || {};
+  }
+
+  getData(field: string, scope?: any) {
+    if (!_data) {
+      // todo: find drag string from event and convert it to _data if possible
+      _data = {};
+    }
+    if (scope === _dataScope && _data) {
+      return _data[field];
+    }
+    return null;
+  }
+
+  static getData(field: string, scope?: any) {
+    if (scope === _dataScope && _data) {
+      return _data[field];
+    }
+    return null;
+  }
+
+  get dragType(): DragType | null {
+    return this.component.dragType;
+  }
+
+  acceptMessage: string = "";
+  rejected: boolean = false;
+
+  accept(message: string = "") {
+    this.acceptMessage = message;
+    this.rejected = false;
+  }
+
+  reject() {
+    this.rejected = true;
+  }
+
+  _onMove() {
+    if (_data) {
+      let ownerDocument = this.component.ownerDocument;
+      if (!ownerDocument) {
+        moveDraggingElement(this);
+        return;
+      }
+      let searchElement = ownerDocument.elementFromPoint(
+        this.clientX,
+        this.clientY
+      ) as HTMLElement | null;
+      let droppingHost: HandlerHost | undefined = undefined;
+      while (searchElement && searchElement !== ownerDocument.body) {
+        if (_dragListeners.has(searchElement)) {
+          let host = _dragListeners.get(searchElement);
+          if (host) {
+            let handlers = host.getHandlers();
+            if (handlers.onDragOverT) {
+              handlers.onDragOverT(this);
+              if (this.acceptMessage != null) {
+                droppingHost = host;
+                break;
+              }
+            }
+          }
+        }
+        searchElement = searchElement.parentElement;
+      }
+      setDroppingHandler(droppingHost || null, this);
+    }
+    moveDraggingElement(this);
+  }
+
+  _onDragEnd(canceled: boolean = false) {
+    if (_droppingHandlers && _droppingHandlers.onDropT && !canceled) {
+      this.dropped = _droppingHandlers.onDropT(this);
+
+      if (this.component.dragType === "right" && this.component.ownerDocument) {
+        // prevent the next menu event if drop handler is called on right mouse button
+        this.component.ownerDocument.addEventListener(
+          "contextmenu",
+          preventDefault,
+          true
+        );
+        setTimeout(() => {
+          if (this.component.ownerDocument) {
+            this.component.ownerDocument.removeEventListener(
+              "contextmenu",
+              preventDefault,
+              true
+            );
+          }
+        }, 0);
+      }
+    }
+
+    destroyDraggingElement(this);
+    if (this.component.ownerDocument) {
+      this.component.ownerDocument.body.classList.remove("dock-dragging");
+    }
+  }
+
+  getRect() {
+    let x = this.clientX;
+    let y = this.clientY;
+    let w = this.dx;
+    let h = this.dy;
+    if (w < 0) {
+      w = -w;
+    } else {
+      x -= w;
+    }
+    if (h < 0) {
+      h = -h;
+    } else {
+      y -= h;
+    }
+    return new DOMRect(x, y, w, h);
+  }
+}
+
+function preventDefault(e: Event) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+export type DragHandler = (state: DragState) => void;
+export type DropHandler = (state: DragState) => any;
+
+let _dataScope: any;
+let _data: { [key: string]: any } | undefined;
+
+let _draggingState: DragState | null = null;
+// applying dragging style
+let _refElement: HTMLElement | null = null;
+let _droppingHost: HandlerHost | null = null;
+let _droppingHandlers: DragHandlers | null = null;
+
+function setDroppingHandler(host: HandlerHost | null, state: DragState) {
+  if (_droppingHost === host) {
+    return;
+  }
+  if (_droppingHandlers && _droppingHandlers.onDragLeaveT) {
+    _droppingHandlers.onDragLeaveT(state);
+  }
+  _droppingHost = host;
+  _droppingHandlers = _droppingHost ? _droppingHost.getHandlers() : null;
+}
+
+export interface DragHandlers {
+  onDragOverT?: DragHandler;
+  onDragLeaveT?: DragHandler;
+  onDropT?: DropHandler;
+}
+
+export interface HandlerHost {
+  getHandlers(): DragHandlers;
+}
+
+let _dragListeners: WeakMap<HTMLElement, HandlerHost> = new WeakMap<
+  HTMLElement,
+  HandlerHost
+>();
+
+export function isDragging() {
+  return _draggingState != null;
+}
+
+export function addHandlers(element: HTMLElement, handler: HandlerHost) {
+  _dragListeners.set(element, handler);
+}
+
+export function removeHandlers(element: HTMLElement) {
+  let host = _dragListeners.get(element);
+  if (host === _droppingHost) {
+    _droppingHost = null;
+    _droppingHandlers = null;
+  }
+  _dragListeners.delete(element);
+}
+
+let _draggingDiv: HTMLDivElement | null = null;
+let _draggingIcon: HTMLDivElement | null = null;
+
+function _createDraggingDiv(doc: Document) {
+  _draggingDiv = doc.createElement("div");
+  _draggingIcon = doc.createElement("div");
+
+  const tabGroup = (
+    _data && "tabGroup" in _data ? _data["tabGroup"] : undefined
+  ) as string | undefined;
+
+  _draggingDiv.className = classNames(
+    groupClassNames(tabGroup),
+    "dragging-layer"
+  );
+
+  _draggingDiv.appendChild(document.createElement("div")); // place holder for dragging element
+  _draggingDiv.appendChild(_draggingIcon);
+}
+
+function createDraggingElement(
+  state: DragState,
+  refElement: HTMLElement,
+  draggingHtml?: HTMLElement | string
+) {
+  if (!state.component.ownerDocument) {
+    return;
+  }
+  _draggingState = state;
+  if (refElement) {
+    refElement.classList.add("dragging");
+    _refElement = refElement;
+  }
+  _createDraggingDiv(state.component.ownerDocument);
+  if (!_draggingDiv) {
+    return;
+  }
+  state.component.ownerDocument.body.appendChild(_draggingDiv);
+
+  let draggingWidth = 0;
+  let draggingHeight = 0;
+  if (draggingHtml === undefined) {
+    draggingHtml = state.component.element || undefined;
+  }
+  if (draggingHtml && "outerHTML" in (draggingHtml as any)) {
+    draggingWidth = (draggingHtml as HTMLElement).offsetWidth;
+    draggingHeight = (draggingHtml as HTMLElement).offsetHeight;
+    draggingHtml = (draggingHtml as HTMLElement).outerHTML;
+  }
+  if (draggingHtml && _draggingDiv.firstElementChild) {
+    _draggingDiv.firstElementChild.outerHTML = draggingHtml as string;
+    const firstChild = _draggingDiv.firstElementChild as HTMLElement;
+    if (
+      window.getComputedStyle(firstChild)
+        .backgroundColor === "rgba(0, 0, 0, 0)"
+    ) {
+      firstChild.style.backgroundColor =
+        window
+          .getComputedStyle(_draggingDiv)
+          .getPropertyValue("--default-background-color");
+    }
+    if (draggingWidth) {
+      if (draggingWidth > 400) draggingWidth = 400;
+      firstChild.style.width = `${draggingWidth}px`;
+    }
+    if (draggingHeight) {
+      if (draggingHeight > 300) draggingHeight = 300;
+      firstChild.style.height = `${draggingHeight}px`;
+    }
+  }
+
+  for (let callback of _dragStateListener) {
+    if (_dataScope) {
+      callback(_dataScope);
+    } else {
+      callback(true);
+    }
+  }
+}
+
+function moveDraggingElement(state: DragState) {
+  if (!_draggingDiv || !_draggingIcon) {
+    return;
+  }
+  _draggingDiv.style.left = `${state.pageX}px`;
+  _draggingDiv.style.top = `${state.pageY}px`;
+
+  if (state.rejected) {
+    _draggingIcon.className = "drag-accept-reject";
+  } else if (state.acceptMessage) {
+    _draggingIcon.className = state.acceptMessage;
+  } else {
+    _draggingIcon.className = "";
+  }
+}
+
+export function destroyDraggingElement(e: DragState) {
+  if (_refElement) {
+    _refElement.classList.remove("dragging");
+    _refElement = null;
+  }
+  if (_draggingDiv) {
+    _draggingDiv.remove();
+    _draggingDiv = null;
+  }
+
+  _draggingState = null;
+  setDroppingHandler(null, e);
+
+  _dataScope = null;
+  _data = undefined;
+
+  for (let callback of _dragStateListener) {
+    callback(null);
+  }
+}
+
+let _dragStateListener: Set<(scope: any) => void> = new Set();
+
+export function addDragStateListener(callback: (scope: any) => void) {
+  _dragStateListener.add(callback);
+}
+
+export function removeDragStateListener(callback: (scope: any) => void) {
+  _dragStateListener.delete(callback);
+}
+
+// work around for drag scroll issue on IOS
+if (
+  typeof window !== "undefined" &&
+  window.navigator &&
+  window.navigator.platform &&
+  /iP(ad|hone|od)/.test(window.navigator.platform)
+) {
+  document.addEventListener(
+    "touchmove",
+    (e: TouchEvent) => {
+      if (
+        e.touches.length === 1 &&
+        document.body.classList.contains("dock-dragging")
+      ) {
+        e.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+}

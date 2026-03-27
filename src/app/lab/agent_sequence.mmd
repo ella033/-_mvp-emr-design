@@ -1,0 +1,60 @@
+%% Agent Sequence - Detailed
+sequenceDiagram
+  autonumber
+  participant U as Web(브라우저)
+  participant A as Agent(로컬)
+  participant API as API 서버
+  participant R as Redis(Challenge)
+  participant DB as DB
+  participant S as 소켓 서버
+
+  Note over U: 1) 웹 진입 → 로그인 페이지
+  U->>API: POST /auth/login (ID/PW)
+  API-->>U: { userJwt }
+
+  rect rgba(220,235,255,0.35)
+    Note over U: 2) 기능 페이지 진입 시 Agent 상태 확인(지연 바인딩)
+    U->>A: GET http://127.0.0.1:<port>/status
+    alt Agent 미설치/미실행
+      U->>U: 다운로드 페이지로 이동(설치/가이드)
+    else Agent 실행 중
+      opt 등록(업서트) 필요 시
+        Note right of A: agentId, publicKey, orgId 준비
+        A->>API: POST /agents {agentId, orgId, publicKey}
+        API->>DB: upsert(agent)
+        API-->>A: {agentId}
+      end
+
+      alt Device accessToken 유효
+        Note over A: 바로 사용(바인딩/nonce 생략)
+      else accessToken 만료
+        A->>API: POST /agents/:agentId/tokens {grantType=refresh_token, refreshToken}
+        alt refresh 성공
+          API-->>A: {accessToken, expiresInSec}
+        else refresh 실패(미보유/만료)
+          U->>API: POST /agents/:agentId/challenges (Authorization: Bearer userJwt)
+          API->>R: set(agentId, nonce, ttl=60s)
+          API-->>U: {nonce, expiresInSec:60}
+          U->>A: nonce 전달(로컬 IPC/HTTP)
+          A->>API: POST /agents/:agentId/bindings {nonce, signature}
+          API->>R: get/del(agentId)
+          API->>DB: refreshToken 저장
+          API-->>A: {accessToken, refreshToken, expiresInSec}
+        end
+      end
+
+      par 실시간 이벤트(선택)
+        A->>S: connect (Authorization: Bearer <Device JWT>)
+        S->>API: JWKS/서명 검증
+        S-->>A: 명령 라우팅/이벤트
+      and 서버 데이터 사용(예: 인증서)
+        A->>API: GET /certs/agent (Authorization: Bearer <Device JWT>)
+        API->>DB: agentId→orgId 확인, 인증서 조회
+        API-->>A: 인증서 목록(slim/detail)
+      end
+    end
+  end
+
+  Note over API,DB: 등록 생략: DB에 agentId/publicKey 존재 & 키 미회전
+  Note over A,API: nonce 생략: accessToken 유효 or refresh 성공
+

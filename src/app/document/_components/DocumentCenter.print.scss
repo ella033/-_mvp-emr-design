@@ -1,0 +1,154 @@
+@media print {
+
+  /* 모든 요소 숨기기 */
+  body * {
+    visibility: hidden;
+  }
+
+  /* LNB, RNB, 헤더 숨기기 */
+  [class*="DocumentLNB"],
+  [class*="DocumentRNB"],
+  [class*="DocumentToolbar"] {
+    display: none;
+  }
+
+  /* PrintableDocument 관련 요소 표시 */
+  [data-print-preview-root="true"],
+  [data-print-root="true"] {
+    display: block;
+    visibility: visible;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    transform: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+
+    * {
+      visibility: visible;
+    }
+  }
+
+  /* printable-pages 표시 */
+  .printable-pages {
+    display: flex;
+    visibility: visible;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+
+  /* printable-page 표시 */
+  .printable-page {
+    display: flex;
+    visibility: visible;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+
+    &:last-child {
+      page-break-after: auto;
+    }
+  }
+
+  /* 배율 스케일 제거 - 인라인 스타일을 덮어쓰기 위해 필요 */
+  [style*="transform: scale"] {
+    transform: none;
+    width: 100%;
+    min-height: auto;
+  }
+
+  /* 스크롤 컨테이너 스타일 */
+  [class*="overflow-auto"] {
+    overflow: visible;
+    height: auto;
+  }
+
+  /* 편집 전용 요소 처리 */
+  /* 버튼은 완전히 숨기기 */
+  .printable-edit-only button,
+  button.printable-edit-only {
+    display: none;
+  }
+
+  /* input은 텍스트처럼 보이도록 스타일 조정 */
+  .printable-edit-only input,
+  input.printable-edit-only {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    color: inherit;
+    font: inherit;
+    width: 100%;
+    min-width: 0;
+    line-height: inherit;
+    background-image: none;
+  }
+
+  .printable-edit-only textarea,
+  textarea.printable-edit-only {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    // px-2 py-1에 해당하는 padding 유지 (상하 4px, 좌우 8px)
+    padding: 4px 8px;
+    margin: 0;
+    resize: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    color: inherit;
+    font: inherit;
+    // line-height를 명시적으로 설정 (11px 기준 leading-snug ≈ 1.375)
+    line-height: 1.375;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overflow: visible;
+  }
+
+  /* PDF 템플릿에서 styles.css가 누락돼도 textarea 원본을 숨기도록 중복 정의 */
+  .printable-textarea-wrapper .printable-edit-only textarea,
+  .printable-textarea-wrapper textarea.printable-edit-only {
+    display: none !important;
+  }
+
+  .printable-textarea-display {
+    border: none !important;
+    background: transparent !important;
+    // px-2 py-1에 해당하는 padding 유지 (상하 4px, 좌우 8px)
+    padding: 4px 8px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    color: inherit;
+    font: inherit;
+    // line-height를 명시적으로 설정 (11px 기준 leading-snug ≈ 1.375)
+    line-height: 1.375;
+  }
+
+  /* label도 편집 전용이면 숨기기 (input만 보이게) */
+  .printable-edit-only label,
+  label.printable-edit-only {
+    display: none;
+  }
+}

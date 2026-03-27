@@ -1,0 +1,82 @@
+/* Medical V2 전용 rc-dock 스타일 오버라이드 */
+
+/* 탭 바 배경색을 카드 모듈 헤더 색상과 동일하게 */
+.medical-v2-dock .dock-bar {
+  background: #E8ECF6 !important;
+}
+
+/* 포커스 시 탭 바 색상 */
+.medical-v2-dock .dock-panel:focus-within .dock-bar {
+  background: #E8ECF6 !important;
+}
+
+/* 포커스 시 보더 색상 유지 (기본 파란색 대신) */
+.medical-v2-dock .dock-panel:focus-within {
+  border-color: #C2C4C8 !important;
+  box-shadow: none !important;
+}
+
+/* 패널 보더 */
+.medical-v2-dock .dock-panel {
+  border: 1px solid #C2C4C8 !important;
+  border-radius: 6px !important;
+}
+
+/* 탭 텍스트 스타일 */
+.medical-v2-dock .dock-tab {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #171719 !important;
+}
+
+/* 비활성 탭 */
+.medical-v2-dock .dock-tab:not(.dock-tab-active) {
+  font-weight: 500 !important;
+  color: #989BA2 !important;
+}
+
+/* 활성 탭 하단 인디케이터 */
+.medical-v2-dock .dock-nav-list:has(.dock-tab:nth-child(2)) .dock-ink-bar {
+  background-color: #171719 !important;
+  height: 2px !important;
+}
+
+/* Divider (리사이즈 핸들) 스타일 */
+.medical-v2-dock .dock-divider {
+  background-color: transparent !important;
+}
+
+.medical-v2-dock .dock-divider:hover {
+  background-color: #453EDC !important;
+  opacity: 0.3;
+}
+
+/* 콘텐츠 영역 배경 */
+.medical-v2-dock .dock-content {
+  background: #fff !important;
+}
+
+/* 드롭 영역 하이라이트 */
+.medical-v2-dock .dock-drop-indicator {
+  background: rgba(69, 62, 220, 0.15) !important;
+  border: 2px dashed #453EDC !important;
+}
+
+/* 편집 모드에서 패널 스타일 */
+.medical-v2-dock.edit-mode .dock-panel {
+  border: 1px dashed #7C5CFA !important;
+}
+
+.medical-v2-dock.edit-mode .dock-bar {
+  cursor: grab !important;
+}
+
+/* 탭 닫기 버튼 숨김 (기본 모드에서) */
+.medical-v2-dock .dock-tab-close-btn {
+  display: none !important;
+}
+
+/* 편집 모드에서만 닫기 버튼 표시 */
+.medical-v2-dock.edit-mode .dock-tab-close-btn {
+  display: flex !important;
+}

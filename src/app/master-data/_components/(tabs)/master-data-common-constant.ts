@@ -1,0 +1,10 @@
+export const HEADER_WIDTH_INDEX = 30;
+export const HEADER_WIDTH_IS_ACTIVE = 50;
+export const HEADER_WIDTH_DATE = 90;
+export const HEADER_WIDTH_DATE_TIME = 120;
+export const HEADER_WIDTH_ITEM_TYPE = 60;
+export const HEADER_WIDTH_CODE = 80;
+export const HEADER_WIDTH_NAME = 200;
+export const HEADER_WIDTH_PRICE = 60;
+export const HEADER_WIDTH_IS_SELF_PAY_RATE = 90;
+export const HEADER_WIDTH_DOCTOR_NAME = 60;

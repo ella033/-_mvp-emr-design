@@ -1,0 +1,195 @@
+/* 나눔고딕 웹폰트 로드 */
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("/fonts/NanumGothic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("/fonts/NanumGothic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("/fonts/NanumGothic-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+.printable-document {
+  position: relative;
+  width: 100%;
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+.printable-document * {
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+.printable-pages {
+  width: 100%;
+  align-items: center;
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+.printable-pages * {
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+.printable-page {
+  background: white;
+  color: inherit;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+/* 미리보기(에디터) 상태에서만 페이지 경계선을 시각적으로 표시 */
+[data-print-preview-root="true"] .printable-page {
+  border: 1px solid #dbdcdf;
+}
+
+.printable-page * {
+  font-family: "Nanum Gothic", "NanumGothic", "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+}
+
+.printable-page input {
+  background-color: #fdf6fa !important;
+}
+
+.printable-page input:focus {
+  outline: 1px solid black !important;
+}
+
+.printable-page-body {
+  min-height: 0;
+  width: 100%;
+  /* flex: 1 대신 자동 확장 및 최소 높이 설정 */
+}
+
+.printable-page-body>*+* {
+  margin-top: 8px;
+}
+
+/* 연속된 contiguous-block 사이의 gap을 제거하여 border가 끊기지 않게 함 */
+.printable-page-body>.printable-block:has(>.printable-contiguous-block)+.printable-block:has(>.printable-contiguous-block) {
+  margin-top: 0;
+}
+
+.printable-block {
+  width: 100%;
+}
+
+.printable-measure {
+  overflow: hidden;
+}
+
+body [data-print-root="true"] {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  :root {
+    background: transparent;
+  }
+
+  body {
+    margin: 0;
+    background: transparent;
+  }
+
+  body * {
+    display: none;
+  }
+
+  body [data-print-root="true"] {
+    display: block;
+    position: static;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    box-shadow: none;
+  }
+
+  [data-print-root="true"] * {
+    display: revert;
+  }
+
+  .printable-page {
+    box-shadow: none;
+    border: none !important;
+    border-radius: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .printable-page input {
+    background-color: transparent !important;
+  }
+
+  .printable-page input:focus {
+    outline: none !important;
+  }
+
+  .printable-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  button {
+    visibility: hidden;
+  }
+}
+
+.printable-textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.printable-edit-only {
+  display: block;
+}
+
+.printable-only {
+  display: none;
+}
+
+@media print {
+
+  /* printable-edit-only 요소는 기본적으로 숨김 (button, label 등) */
+  .printable-edit-only {
+    display: none !important;
+  }
+
+  /* input과 textarea는 텍스트처럼 보이도록 표시 (DocumentCenter.print.scss에서 스타일 처리) */
+  .printable-edit-only input,
+  input.printable-edit-only,
+  .printable-edit-only textarea,
+  textarea.printable-edit-only {
+    display: block !important;
+  }
+
+  /* printable-textarea-wrapper 내부의 textarea는 숨김 처리 (printable-textarea-display가 대신 표시됨) */
+  .printable-textarea-wrapper .printable-edit-only textarea,
+  .printable-textarea-wrapper textarea.printable-edit-only {
+    display: none !important;
+  }
+
+  .printable-only {
+    display: block !important;
+  }
+}

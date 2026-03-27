@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "skills": {
+    "boy-scout": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "43d00090efc13c6807572320441c13842ce90db2de12d0a324851bb9730cefce"
+    },
+    "clean-code": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "c4f87bb9425b01388cdf56e72f329a8ab4047ed1d7541d2b2ee6122ee4e0e565"
+    },
+    "clean-comments": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "afc47d0b32b3f46149b4fb3137484e919f8f130fb99e366e68df78fd9951845f"
+    },
+    "clean-functions": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "0f3a3cc52dc1a5873fd28fb28ef106940367d9ab6d7955bcdba087c131f8e41b"
+    },
+    "clean-general": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "7e6c85c21fc7f2a7e667df3b03d231078d2281aefa71d646397505f216748afe"
+    },
+    "clean-names": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "0156c3c21ebc01c1ac27732745f39bafe9a1eb65b76fdccc7f4ed1540e7d21a5"
+    },
+    "clean-tests": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "935c632561c65a2faf82fed94926ffa5c994419e12026cc675c2048e4521539c"
+    },
+    "frontend-design": {
+      "source": "anthropics/claude-code",
+      "sourceType": "github",
+      "computedHash": "e8118284a6365753790d44bb2758a6032b3af27fa84696428d9233f2be0f4e78"
+    },
+    "python-clean-code": {
+      "source": "ertugrul-dmr/clean-code-skills",
+      "sourceType": "github",
+      "computedHash": "d3cbaf6153f207fa543f5d431d54d1e6acc475a31b21e85f6cf10e0f2b1863f2"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "ff602214356ac15c65aa8702aff5a2aedaf958d66d301e3279f1dfeaf18c94e9"
+    }
+  }
+}

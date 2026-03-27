@@ -1,0 +1,325 @@
+body {
+  background-color: #ddd;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+* {
+  -moz-box-sizing: border-box;
+}
+
+/* A4 8-1/4 x 11-3/4 in 210 x 297 mm */
+
+.A4 {
+  background: #fff;
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  padding: 0;
+  margin: 0;
+}
+
+.paper-tail {
+  width: 210mm;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+
+@page {
+  margin: 0;
+  margin-top: -1px;
+  size: A4;
+}
+
+@media print {
+
+  html,
+  body {
+    background: #fff;
+    height: 297mm;
+    width: 210mm;
+  }
+
+  .A4 {
+    background: initial;
+    border: initial;
+    border-radius: initial;
+    box-shadow: initial;
+    margin: 0;
+    min-height: initial;
+    page-break-after: always;
+    width: initial;
+  }
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.table {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.table th {
+  background-color: #e6e6e6;
+  border: 1px solid;
+  Line-height: 140%;
+  padding: 2px;
+  text-align: center;
+}
+
+.table td {
+  border: 1px solid;
+  font-weight: lighter;
+  Line-height: 140%;
+  padding: 2px;
+  text-align: left;
+}
+
+.table2 {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.table2 th {
+  background-color: #e6e6e6;
+  border: 1px solid;
+  Line-height: 140%;
+  padding: 2px;
+  text-align: center;
+}
+
+.table2 td {
+  border: 1px solid;
+  font-weight: lighter;
+  line-height: 130%;
+  padding: 2px;
+  text-align: left;
+}
+
+.in-table {
+  width: 100%;
+}
+
+.in-table td {
+  border: 1px solid;
+  font-weight: lighter;
+  Line-height: 140%;
+  padding: 2px;
+  text-align: left;
+}
+
+.in-table2 {
+  width: 100%;
+}
+
+.in-table2 td {
+  border: 1px solid;
+  font-weight: lighter;
+  padding: 2px;
+  text-align: left;
+  /*border-color: red;*/
+}
+
+.border-remove-top-left {
+  border-left: none !important;
+  border-top: none !important;
+}
+
+.border-remove-left {
+  border-left: none !important;
+}
+
+.border-remove-right {
+  border-right: none !important;
+}
+
+.border-remove-top-right {
+  border-right: none !important;
+  border-top: none !important;
+}
+
+.border-remove-top-bottom {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+
+.border-remove-bottom {
+  border-bottom: none !important;
+}
+
+.border-remove-bottom-left {
+  border-bottom: none !important;
+  border-left: none !important;
+}
+
+.border-remove-bottom-right {
+  border-bottom: none !important;
+  border-right: none !important;
+}
+
+.border-remove-top {
+  border-top: none !important;
+}
+
+.table-noline td,
+.table-noline th {
+  padding: 2px;
+  text-align: left;
+}
+
+.table-info tr {
+  border-left: 1px solid;
+  border-right: 1px solid;
+}
+
+.table-info th {
+  font-weight: bold;
+  padding-top: 2px;
+  vertical-align: top;
+  width: 15px;
+}
+
+.table-info td {
+  font-size: 12px;
+  font-weight: lighter;
+  Line-height: 140%;
+  padding: 2px;
+  text-align: left;
+}
+
+.keep-together {
+  page-break-inside: avoid;
+}
+
+.break-before {
+  page-break-before: always;
+}
+
+.break-after {
+  page-break-after: always;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.br {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.dis-code-cell {
+  width: 10.3mm;
+  font-size: 12px;
+  text-align: center !important;
+}
+
+.drug-row {
+  height: 6.3mm;
+  font-size: 12px;
+}
+
+.sign {
+  height: auto;
+  max-height: 37px;
+  max-width: 90px;
+  width: auto;
+}
+
+.exam-report-cover-title-div {
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.exam-report-cover-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 9px;
+}
+
+.exam-report-cover-title-content {
+  font-size: 20px;
+  border-bottom: solid;
+  border-width: 1px;
+  display: inline-block;
+  width: 580px;
+  padding-bottom: 5px;
+}
+
+.exam-report-cover-title-bullet {
+  font-size: 30px;
+}
+
+.exam-report-title {
+  font-size: 16px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.exam-report-content {
+  border-style: solid;
+  border-width: 1px;
+  padding: 5px;
+  min-height: 15px;
+}
+
+.exam-logo {
+  height: auto;
+  max-height: 50px;
+  max-width: 50px;
+  width: auto;
+}
+
+.form-prescription {
+  background-image: url("../Images/처방전양식지.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.check-marker-div {
+  position: absolute;
+  font-weight: bold;
+}
+
+.pharmacy-note {
+  display: inline-block;
+  font-size: 12px;
+  word-break: break-all;
+  max-width: 55mm;
+  max-height: 48mm;
+  overflow: hidden;
+}
+
+.usage {
+  display: inline-block;
+  word-break: break-all;
+  max-width: 55mm;
+  max-height: 4mm;
+  overflow: hidden;
+}
+
+.drug-name,
+.injection-name {
+  display: table-cell;
+  max-width: 79mm;
+  width: 79mm;
+  white-space: nowrap;
+  text-align: center;
+  overflow: hidden;
+}

@@ -1,0 +1,231 @@
+:root {
+  --command-order-color: #0066ff;
+
+  /* Hover Overlay Colors */
+  --hover-16: #121212;
+
+  /* foreground colors */
+  --fg-main: #111;
+  --fg-invert: #fff;
+
+  /* Primary Colors */
+  --main-color: #180f38;
+  --main-color-hover: color-mix(in srgb, var(--main-color) 64%, var(--hover-16) 16%);
+  --main-color-2-1: #4547aa;
+  --second-color: #4f29e5;
+  --second-color-2-2: #7c5cfa;
+
+  /* Gray Colors */
+  --gray-100: #171719;
+  --gray-200: #292a2d;
+  --gray-300: #46474c;
+  --gray-400: #70737c;
+  --gray-500: #989ba2;
+  --gray-600: #aeb0b6;
+  --gray-700: #c2c4c8;
+  --gray-white: #ffffff;
+
+  /* Background Colors */
+  --bg-main: #fff;
+  --bg-main-hover: color-mix(in srgb, var(--bg-main) 84%, var(--hover-16) 16%);
+  --page-background: #f7f7f8;
+  --bg-base: #f4f4f5;
+  --bg-base-hover: color-mix(in srgb, var(--bg-base) 84%, var(--hover-16) 16%);
+  --bg-base1: #fbfaff;
+  --bg-dock: #e8ecf6;
+  --bg-dock-select: #9ec5ff;
+  --bg-side-bar: #eef0f8;
+  --bg-card: #efeef8;
+  --bg-card-effect: #f1edff66;
+  --bg-1: #f7f7f8;
+  --bg-2: #f4f4f5;
+  --bg-3: #eaebec;
+  --bg-4: #e1e2e4;
+  --bg-5: #878a93;
+  --bg-main-disease: rgba(255, 239, 232, 0.6);
+
+  /* Line/Border Colors */
+  --border-1: #dbdcdf;
+  --border-2: #c2c4c8;
+
+  /* Status Colors */
+  --info: #0066ff;
+  --blue-glow-rgb: 0, 102, 255; /* --info의 RGB 값 (rgba에서 사용) */
+  --negative: #ff4242;
+  --positive: #00bf40;
+  --positive-secondary: #009951;
+  --positive-tertiary: #ebffee;
+  --point: #ff7b2e;
+
+  /* Supporting Colors */
+  --blue-1: #eaf2fe;
+  --blue-2: #3385ff;
+  --blue-3: #a7c6ff;
+  --blue-4: #e5eeff;
+  --purple-1: #f9edff;
+  --purple-2: #d478ff;
+  --red-1: #feecec;
+  --red-2: #ff6363;
+  --violet-1: #ede8ff;
+  --violet-1-hover: color-mix(in srgb, var(--violet-1) 84%, var(--hover-16) 16%);
+  --violet-2: #6541f2;
+  --green-1: #e6ffd4;
+  --green-2: #58cf04;
+  --cyan-1: #defaff;
+  --cyan-2: #2eb4c1;
+  --yellow-1: #f4a130;
+  --yellow-3: #fde4a8;
+  --yellow-4: #fff5e1;
+  --gray-1: #333333;
+  --gray-4: #ebebeb;
+  --lime-1: #f5ffe7;
+  --lime-2: #4ead0a;
+
+  /* Color Picker */
+  --color-picker-Red-1: #e22400;
+  --color-picker-Orange-1: #ff6a00;
+  --color-picker-Yellow-1: #f4a130;
+  --color-picker-Green-1: #669d34;
+  --color-picker-DarkGreen-1: #0b6b50;
+  --color-picker-Cyan-1: #008cb4;
+  --color-picker-Blue-1: #0056d6;
+  --color-picker-Purple-1: #371a94;
+  --color-picker-Magenta-1: #b11bc2;
+  --color-picker-Gray-1: #333333;
+  --color-picker-Red-2: #ff8385;
+  --color-picker-Orange-2: #fea57d;
+  --color-picker-Yellow-2: #fed977;
+  --color-picker-Green-2: #b1dd8b;
+  --color-picker-DarkGreen-2: #00aea9;
+  --color-picker-Cyan-2: #52d6fc;
+  --color-picker-Blue-2: #74a7ff;
+  --color-picker-Purple-2: #864ffd;
+  --color-picker-Magenta-2: #d357fe;
+  --color-picker-Gray-2: #858585;
+  --color-picker-Red-3: #ffb5af;
+  --color-picker-Orange-3: #ffc5ab;
+  --color-picker-Yellow-3: #fde4a8;
+  --color-picker-Green-3: #cde8b5;
+  --color-picker-DarkGreen-3: #9de7da;
+  --color-picker-Cyan-3: #93e3fc;
+  --color-picker-Blue-3: #a7c6ff;
+  --color-picker-Purple-3: #b18cfe;
+  --color-picker-Magenta-3: #e292fe;
+  --color-picker-Gray-3: #c2c2c2;
+
+  /* Overlay Colors */
+  --dim: #000000;
+}
+
+/* Dark Mode Colors */
+.dark {
+  /* foreground colors */
+  --fg-main: #fff;
+  --fg-invert: #111;
+
+  /* Primary Colors */
+  --main-color: #6d54d6;
+  --main-color-hover: color-mix(in srgb, var(--main-color) 64%, var(--hover-16) 16%);
+  --second-color: #7a63d3;
+  --second-color-2-2: #7a63d3;
+
+  /* Gray Colors */
+  --gray-100: #f7f7f8;
+  --gray-200: #f4f4f5;
+  --gray-300: #e4e8ec;
+  --gray-400: #e1e2e4;
+  --gray-500: #c2c4cb;
+  --gray-600: #989ba2;
+  --gray-700: #70737c;
+  --gray-white: #141415;
+
+  /* Background Colors */
+  --bg-main: #000;
+  --bg-main-hover: color-mix(in srgb, var(--bg-main) 84%, var(--hover-16) 16%);
+  --page-background: #141415;
+  --bg-base: #0f0f10;
+  --bg-base-hover: color-mix(in srgb, var(--bg-base) 84%, var(--hover-16) 16%);
+  --bg-base1: #1e1a26;
+  --bg-dock: #2b3242;
+  --bg-dock-select: #3f6bb3;
+  --bg-side-bar: #232a38;
+  --bg-card-effect: #4e3d8266;
+  --bg-1: #2c2c2e;
+  --bg-2: #292a2d;
+  --bg-3: #333438;
+  --bg-4: #3a3b3c;
+  --bg-5: #9b9ba2;
+  --bg-main-disease: rgba(255, 239, 232, 0.2);
+
+  /* Line/Border Colors */
+  --border-1: #2d2f33;
+  --border-2: #393a3c;
+
+  /* Status Colors */
+  --info: #6daeff;
+  --blue-glow-rgb: 109, 174, 255; /* --info의 RGB 값 (rgba에서 사용) */
+  --negative: #ff6b6b;
+  --positive: #00c837;
+  --positive-tertiary: #ebffee;
+  --positive-secondary: #009951;
+  --point: #ff9b61;
+
+  /* Supporting Colors */
+  --blue-1: #233044;
+  --blue-2: #4c9eff;
+  --blue-3: #5d7fa6;
+  --blue-4: #0f1d31;
+  --purple-1: #3b2e41;
+  --purple-2: #bf60e6;
+  --red-1: #402d2d;
+  --red-2: #ff7c7c;
+  --violet-1: #312e47;
+  --violet-2: #8464ff;
+  --green-1: #2c4027;
+  --green-2: #86f54b;
+  --cyan-1: #1e4046;
+  --cyan-2: #26c1de;
+  --yellow-3: #fde4a8;
+  --yellow-4: #362917;
+
+  /* Color Picker */
+  --color-picker-Red-1: #e22400;
+  --color-picker-Orange-1: #d95f28;
+  --color-picker-Yellow-1: #d8921c;
+  --color-picker-Green-1: #669d34;
+  --color-picker-DarkGreen-1: #0b6b50;
+  --color-picker-Cyan-1: #008cb4;
+  --color-picker-Blue-1: #2f66b1;
+  --color-picker-Purple-1: #2e1a6b;
+  --color-picker-Magenta-1: #9b2c8e;
+  --color-picker-Gray-1: #333333;
+  --color-picker-Red-2: #ff8385;
+  --color-picker-Orange-2: #ea8b5c;
+  --color-picker-Yellow-2: #d8a84d;
+  --color-picker-Green-2: #95c07b;
+  --color-picker-DarkGreen-2: #1e7a70;
+  --color-picker-Cyan-2: #52d6fc;
+  --color-picker-Blue-2: #5c75b0;
+  --color-picker-Purple-2: #6b4ca3;
+  --color-picker-Magenta-2: #b25fae;
+  --color-picker-Gray-2: #666666;
+  --color-picker-Red-3: #ff8a80;
+  --color-picker-Orange-3: #e89c78;
+  --color-picker-Yellow-3: #ccb066;
+  --color-picker-Green-3: #7daf63;
+  --color-picker-DarkGreen-3: #4b9b8e;
+  --color-picker-Cyan-3: #4dd0e1;
+  --color-picker-Blue-3: #5d7fa6;
+  --color-picker-Purple-3: #7c5fb2;
+  --color-picker-Magenta-3: #c47fc5;
+  --color-picker-Gray-3: #999999;
+  --color-picker-Orange-4: #ffefe8;
+
+  /* Overlay Colors */
+  --dim: #000000;
+}
+
+/* 인라인 스타일용 헬퍼 */
+.hover\:color-mix-16:hover {
+  background-color: color-mix(in srgb, var(--bg-color) 84%, var(--hober-color) 16%);
+}

@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# next.js
+.next/
+out/
+
+# production
+build/
+dist/
+
+# env files
+.env
+.env.local
+.env.development
+.env.production
+
+# debug
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# sentry
+.sentryclirc
+
+# turbopack
+.turbo/
+
+# bundle analyzer
+.next-stats/
+analyze/
+
+# claude
+.claude/

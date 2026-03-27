@@ -1,0 +1,468 @@
+#!/usr/bin/env node
+/**
+ * API 타입 생성 스크립트
+ * Windows 및 모든 플랫폼에서 동작
+ * 로컬 파일 다운로드 방식 사용
+ */
+
+const { execSync } = require("child_process");
+const https = require("https");
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+
+// 환경 변수 설정
+const API_URL =
+  process.env.API_DOCS_URL ||
+  "https://nextemr-api-dev.ubcare.co.kr/api-docs-json";
+const OUTPUT_DIR = path.join(__dirname, "../src/generated/api");
+const OUTPUT_FILE = path.join(OUTPUT_DIR, "types.ts");
+const TEMP_OPENAPI_FILE = path.join(__dirname, "../temp-openapi.json");
+const TIMEOUT = parseInt(process.env.API_GENERATE_TIMEOUT || "30000", 10); // 30초 기본값
+const MAX_RETRIES = parseInt(process.env.API_GENERATE_MAX_RETRIES || "3", 10);
+const RETRY_DELAY = parseInt(
+  process.env.API_GENERATE_RETRY_DELAY || "2000",
+  10
+); // 2초
+
+/**
+ * API 문서 다운로드 (Node.js 내장 모듈만 사용)
+ */
+async function downloadOpenApiSpec(url) {
+  return new Promise((resolve, reject) => {
+    try {
+      const urlObj = new URL(url);
+      const isHttps = urlObj.protocol === "https:";
+      const client = isHttps ? https : http;
+
+      const options = {
+        hostname: urlObj.hostname,
+        port: urlObj.port || (isHttps ? 443 : 80),
+        path: urlObj.pathname + urlObj.search,
+        method: "GET",
+        timeout: TIMEOUT,
+        headers: {
+          Accept: "application/json",
+        },
+      };
+
+      const req = client.request(options, (res) => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`));
+          return;
+        }
+
+        // 인코딩 처리 (한글 깨짐 방지)
+        const chunks = [];
+        res.on("data", (chunk) => {
+          chunks.push(chunk);
+        });
+
+        res.on("end", () => {
+          try {
+            // Buffer를 UTF-8로 명시적으로 디코딩
+            const buffer = Buffer.concat(chunks);
+            const data = buffer.toString("utf8");
+
+            const json = JSON.parse(data);
+            resolve(json);
+          } catch (e) {
+            reject(new Error(`Invalid JSON response: ${e.message}`));
+          }
+        });
+      });
+
+      req.on("error", reject);
+      req.on("timeout", () => {
+        req.destroy();
+        reject(new Error("Request timeout"));
+      });
+      req.setTimeout(TIMEOUT);
+      req.end();
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+/**
+ * OpenAPI 스펙에서 description과 example 필드를 재귀적으로 제거
+ * 이렇게 하면 생성된 타입 파일에서 주석이 생성되지 않아 파일 크기가 크게 줄어듭니다
+ */
+function removeDescriptionsAndExamples(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => removeDescriptionsAndExamples(item));
+  } else if (obj !== null && typeof obj === "object") {
+    const cleaned = {};
+    for (const [key, value] of Object.entries(obj)) {
+      // description, example, summary 필드 제거
+      if (key === "description" || key === "example" || key === "summary") {
+        continue;
+      }
+      cleaned[key] = removeDescriptionsAndExamples(value);
+    }
+    return cleaned;
+  }
+  return obj;
+}
+
+/**
+ * 유니코드 이스케이프 시퀀스를 한글로 변환
+ * "\uC784\uC2E0\uBD80" -> "임신부"
+ * "DLL\uBC84\uC804" -> "DLL버전"
+ * components["schemas"]["\uC784\uC2E0\uBD80"] -> components["schemas"]["임신부"]
+ */
+function convertUnicodeEscapesToKorean(content) {
+  // 문자열 리터럴 내의 유니코드 이스케이프 시퀀스를 변환
+  // 모든 문자열 리터럴을 찾고, 내부에 유니코드 이스케이프가 있으면 변환
+
+  // 문자열 리터럴 패턴: 따옴표로 시작하고, 이스케이프된 문자나 일반 문자를 포함하고, 따옴표로 끝남
+  return content.replace(/"([^"\\]|\\.)*"/g, (match) => {
+    // 문자열 내부에 유니코드 이스케이프가 있는지 확인
+    if (!match.includes("\\u")) return match;
+
+    // 문자열 내부 내용 추출 (앞뒤 따옴표 제거)
+    let innerContent = match.slice(1, -1);
+
+    // 유니코드 이스케이프 시퀀스를 찾아서 변환
+    // 다른 이스케이프 시퀀스(\\, \", \n 등)는 건드리지 않도록 주의
+    // \uXXXX 패턴만 찾아서 변환
+    innerContent = innerContent.replace(
+      /\\u([0-9A-Fa-f]{4})/g,
+      (unicodeMatch, hex) => {
+        const codePoint = parseInt(hex, 16);
+        return String.fromCharCode(codePoint);
+      }
+    );
+
+    // 변환된 내용으로 문자열 재구성
+    return `"${innerContent}"`;
+  });
+}
+
+/**
+ * 중괄호를 매칭하여 export 문의 끝을 찾기
+ */
+function findExportEnd(content, startIndex) {
+  let braceCount = 0;
+  let inString = false;
+  let stringChar = null;
+  let i = startIndex;
+
+  while (i < content.length) {
+    const char = content[i];
+    const prevChar = i > 0 ? content[i - 1] : null;
+
+    // 문자열 내부 체크 (이스케이프 무시)
+    if (!inString && (char === '"' || char === "'" || char === "`")) {
+      inString = true;
+      stringChar = char;
+    } else if (inString && char === stringChar && prevChar !== "\\") {
+      inString = false;
+      stringChar = null;
+    }
+
+    // 문자열 내부가 아닐 때만 중괄호 카운트
+    if (!inString) {
+      if (char === "{") {
+        braceCount++;
+      } else if (char === "}") {
+        braceCount--;
+        if (braceCount === 0) {
+          return i + 1;
+        }
+      }
+    }
+
+    i++;
+  }
+
+  return -1;
+}
+
+/**
+ * 생성된 타입 파일을 섹션별로 분리
+ */
+function splitTypesFile(content) {
+  const header = `/**
+ * This file was auto-generated by openapi-typescript.
+ * Do not make direct changes to the file.
+ */\n\n`;
+
+  const sections = [];
+  const lines = content.split("\n");
+
+  // 각 export 문을 찾아서 파싱
+  const exportPatterns = [
+    {
+      pattern: /^export interface paths\s*\{/,
+      name: "paths",
+      exportName: "paths",
+      exportType: "interface",
+    },
+    {
+      pattern: /^export type webhooks\s*=/,
+      name: "webhooks",
+      exportName: "webhooks",
+      exportType: "type",
+    },
+    {
+      pattern: /^export interface components\s*\{/,
+      name: "components",
+      exportName: "components",
+      exportType: "interface",
+    },
+    {
+      pattern: /^export type \$defs\s*=/,
+      name: "defs",
+      exportName: "$defs",
+      exportType: "type",
+    },
+    {
+      pattern: /^export interface operations\s*\{/,
+      name: "operations",
+      exportName: "operations",
+      exportType: "interface",
+    },
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    for (const patternInfo of exportPatterns) {
+      if (patternInfo.pattern.test(line)) {
+        const startIndex = content.indexOf(line);
+
+        if (patternInfo.exportType === "interface") {
+          // 인터페이스: 중괄호 매칭
+          const endIndex = findExportEnd(content, startIndex);
+          if (endIndex > startIndex) {
+            const sectionContent = content.substring(startIndex, endIndex);
+            sections.push({
+              name: patternInfo.name,
+              content: sectionContent,
+              exportName: patternInfo.exportName,
+              exportType: patternInfo.exportType,
+            });
+          }
+        } else {
+          // 타입: 세미콜론까지
+          const semicolonIndex = content.indexOf(";", startIndex);
+          if (semicolonIndex > startIndex) {
+            const sectionContent = content.substring(
+              startIndex,
+              semicolonIndex + 1
+            );
+            sections.push({
+              name: patternInfo.name,
+              content: sectionContent,
+              exportName: patternInfo.exportName,
+              exportType: patternInfo.exportType,
+            });
+          }
+        }
+        break; // 한 줄에 하나의 export만 매칭
+      }
+    }
+  }
+
+  return sections.map((section) => ({
+    ...section,
+    content: header + section.content,
+  }));
+}
+
+/**
+ * 분리된 파일들을 생성하고 인덱스 파일 생성
+ */
+function createSplitFiles(content) {
+  // 출력 디렉토리 생성
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
+
+  const sections = splitTypesFile(content);
+  const exports = [];
+
+  console.log(`[API Generate] Splitting into ${sections.length} files...`);
+
+  // 각 섹션을 별도 파일로 저장
+  for (const section of sections) {
+    const fileName = `${section.name}.ts`;
+    const filePath = path.join(OUTPUT_DIR, fileName);
+
+    fs.writeFileSync(filePath, section.content, { encoding: "utf8" });
+    console.log(
+      `[API Generate] Created ${fileName} (${section.content.split("\n").length} lines)`
+    );
+
+    exports.push({
+      name: section.exportName,
+      type: section.exportType,
+      file: `./${section.name}`,
+    });
+  }
+
+  // 인덱스 파일 생성
+  const indexContent = `/**
+ * This file was auto-generated by openapi-typescript.
+ * Do not make direct changes to the file.
+ */
+
+${exports.map((exp) => `export ${exp.type === "type" ? "type" : ""} { ${exp.name} } from "${exp.file}";`).join("\n")}
+`;
+
+  const indexPath = path.join(OUTPUT_DIR, "index.ts");
+  fs.writeFileSync(indexPath, indexContent, { encoding: "utf8" });
+  console.log(`[API Generate] Created index.ts`);
+
+  // 호환성을 위해 types.ts 파일도 생성 (각 파일에서 직접 re-export)
+  const typesContent = `/**
+ * This file was auto-generated by openapi-typescript.
+ * Do not make direct changes to the file.
+ * 
+ * This file re-exports all types from the split files for backward compatibility.
+ * For better performance, import directly from './index' or specific files.
+ */
+
+${exports.map((exp) => `export ${exp.type === "type" ? "type" : ""} { ${exp.name} } from "${exp.file}";`).join("\n")}
+`;
+
+  fs.writeFileSync(OUTPUT_FILE, typesContent, { encoding: "utf8" });
+  console.log(`[API Generate] Created types.ts (re-export for compatibility)`);
+}
+
+/**
+ * openapi-typescript 실행 (재시도 로직 포함)
+ */
+async function generateApiTypes(retryCount = 0) {
+  let tempFileCreated = false;
+
+  try {
+    console.log(
+      `[API Generate] Attempting to generate API types... (${retryCount + 1}/${MAX_RETRIES})`
+    );
+
+    // 1. API 문서 다운로드
+    console.log("[API Generate] Downloading OpenAPI specification...");
+    let openApiSpec;
+    try {
+      openApiSpec = await downloadOpenApiSpec(API_URL);
+      console.log(
+        "[API Generate] OpenAPI specification downloaded successfully"
+      );
+    } catch (error) {
+      console.warn(`[API Generate] Download failed: ${error.message}`);
+      if (retryCount < MAX_RETRIES - 1) {
+        console.log(`[API Generate] Retrying in ${RETRY_DELAY}ms...`);
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+        return generateApiTypes(retryCount + 1);
+      }
+      throw new Error(`Cannot download API specification: ${error.message}`);
+    }
+
+    // 2. OpenAPI 스펙에서 주석 생성에 필요한 필드 제거 (전처리)
+    console.log(
+      "[API Generate] Removing description and example fields to reduce file size..."
+    );
+    const cleanedSpec = removeDescriptionsAndExamples(openApiSpec);
+
+    // 3. 임시 파일로 저장 (UTF-8 BOM 없이 저장)
+    try {
+      const jsonString = JSON.stringify(cleanedSpec, null, 2);
+      // UTF-8로 명시적으로 저장 (한글 깨짐 방지)
+      fs.writeFileSync(TEMP_OPENAPI_FILE, jsonString, { encoding: "utf8" });
+      tempFileCreated = true;
+      console.log(
+        "[API Generate] OpenAPI specification saved to temporary file"
+      );
+    } catch (error) {
+      throw new Error(`Failed to save OpenAPI specification: ${error.message}`);
+    }
+
+    // 4. openapi-typescript 실행 (로컬 파일 사용)
+    console.log("[API Generate] Generating TypeScript types...");
+    const command = `npx --yes openapi-typescript "${TEMP_OPENAPI_FILE}" -o "${OUTPUT_FILE}"`;
+
+    execSync(command, {
+      stdio: "inherit",
+      timeout: TIMEOUT,
+      shell: process.platform === "win32" ? "cmd.exe" : undefined,
+    });
+
+    // 5. 생성된 파일의 유니코드 이스케이프를 한글로 변환
+    if (fs.existsSync(OUTPUT_FILE)) {
+      console.log("[API Generate] Converting Unicode escapes to Korean...");
+      let content = fs.readFileSync(OUTPUT_FILE, { encoding: "utf8" });
+      content = convertUnicodeEscapesToKorean(content);
+
+      // 6. 파일을 섹션별로 분리
+      console.log("[API Generate] Splitting types into separate files...");
+      createSplitFiles(content);
+
+      console.log("[API Generate] Unicode escapes converted successfully");
+    }
+
+    console.log("[API Generate] Successfully generated API types");
+    return true;
+  } catch (error) {
+    console.error(`[API Generate] Error: ${error.message}`);
+
+    if (retryCount < MAX_RETRIES - 1) {
+      console.log(
+        `[API Generate] Retrying in ${RETRY_DELAY}ms... (${retryCount + 1}/${MAX_RETRIES})`
+      );
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+      return generateApiTypes(retryCount + 1);
+    }
+
+    console.error("[API Generate] Failed after all retries");
+    return false;
+  } finally {
+    // 임시 파일 정리
+    if (tempFileCreated && fs.existsSync(TEMP_OPENAPI_FILE)) {
+      try {
+        fs.unlinkSync(TEMP_OPENAPI_FILE);
+        console.log("[API Generate] Temporary file cleaned up");
+      } catch (error) {
+        console.warn(
+          `[API Generate] Failed to clean up temporary file: ${error.message}`
+        );
+      }
+    }
+  }
+}
+
+/**
+ * 메인 실행
+ */
+async function main() {
+  const args = process.argv.slice(2);
+  const isCheckMode = args.includes("--check") || args.includes("-c");
+
+  try {
+    const success = await generateApiTypes();
+
+    if (!success) {
+      if (isCheckMode) {
+        // 체크 모드에서는 실패해도 에러를 throw하지 않음
+        console.warn("[API Generate] Check mode: Continuing despite failure");
+        process.exit(0);
+      } else {
+        process.exit(1);
+      }
+    }
+  } catch (error) {
+    console.error("[API Generate] Fatal error:", error);
+    if (!isCheckMode) {
+      process.exit(1);
+    }
+  }
+}
+
+// 스크립트 직접 실행 시
+if (require.main === module) {
+  main();
+}
+
+module.exports = { generateApiTypes };

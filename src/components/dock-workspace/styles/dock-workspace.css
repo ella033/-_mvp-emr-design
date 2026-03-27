@@ -1,0 +1,482 @@
+/* ===== Dock Workspace Root ===== */
+.dock-workspace {
+  --dw-tab-height: 32px;
+  --dw-font-size: 13px;
+  --dw-border-radius: 6px;
+  --dw-splitter-width: 6px;
+  --dw-min-panel-size: 50px;
+
+  /* Colors - using existing app CSS variables */
+  --dw-panel-bg: var(--bg-main, #ffffff);
+  --dw-panel-border: var(--border-2, #e5e7eb);
+  --dw-panel-border-focus: var(--violet-2, #c4b5fd);
+  --dw-tab-bar-bg: var(--bg-2, var(--bg-dock, #f3f4f6));
+  --dw-tab-bar-bg-focus: var(--bg-dock-select, #dbeafe);
+  --dw-tab-color: var(--gray-300, #9ca3af);
+  --dw-tab-color-active: var(--fg-main, #111827);
+  --dw-tab-color-hover: var(--fg-main, #111827);
+  --dw-splitter-bg: var(--bg-base, #e5e7eb);
+  --dw-splitter-bg-hover: var(--bg-base, #e5e7eb);
+  --dw-preview-bg: rgba(136, 199, 244, 0.4);
+  --dw-preview-border: rgba(255, 255, 255, 0.8);
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  font-size: var(--dw-font-size);
+
+  /* Dark theme */
+  &[data-theme="dark"] {
+    --dw-panel-bg: var(--bg-2, #1f2937);
+    --dw-tab-bar-bg: var(--bg-3, #374151);
+    --dw-splitter-bg: var(--border-2, #4b5563);
+    --dw-tab-color: var(--gray-400, #6b7280);
+  }
+
+  /* ===== Box Node ===== */
+  .dock-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .dock-box[data-mode="horizontal"] {
+    flex-direction: row;
+  }
+
+  .dock-box[data-mode="vertical"] {
+    flex-direction: column;
+  }
+
+  .dock-box-child {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ===== Panel Node ===== */
+  .dock-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    background: var(--dw-panel-bg) !important;
+    border: 1px solid var(--dw-panel-border) !important;
+    border-radius: var(--dw-border-radius);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .dock-panel:focus-within {
+    border-color: var(--dw-panel-border-focus) !important;
+  }
+
+  .dock-panel-content {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  /* ===== Tab Bar ===== */
+  .dock-tab-bar {
+    display: flex;
+    align-items: center;
+    height: var(--dw-tab-height);
+    min-height: var(--dw-tab-height);
+    background: var(--dw-tab-bar-bg);
+    border-bottom: 1px solid var(--dw-panel-border);
+    overflow: hidden;
+    gap: 0;
+  }
+
+  .dock-tab-bar--draggable {
+    cursor: grab;
+  }
+
+  .dock-tab-bar--draggable:active {
+    cursor: grabbing;
+  }
+
+  .dock-tab-bar-tabs {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    flex: 1;
+    gap: 0;
+    min-width: 0;
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+
+  .dock-tab-bar-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-tab-bar-extra-left {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .dock-tab-bar-extra {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* ===== Tab ===== */
+  /* rc-dock.css 와 동일한 .dock-tab 클래스명을 사용하므로
+     .dock-workspace 하위에 nesting하여 specificity 확보.
+     rc-dock 에서 !important 를 사용하는 속성은 여기서도 !important 를 추가. */
+  .dock-tab {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+    padding: 4px 10px;
+    height: 100% !important;
+    white-space: nowrap;
+    font-size: 13px;
+    color: var(--gray-100, var(--dw-tab-color)) !important;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+    transition: color 150ms, background-color 150ms;
+    flex: 1 1 0;
+    min-width: 0;
+    float: none !important;
+    border: none !important;
+    border-right: 1px solid var(--dw-panel-border) !important;
+    margin-right: 0 !important;
+    background: none !important;
+    position: static;
+    text-align: left;
+  }
+
+  .dock-tab:last-child {
+    border-right: none !important;
+  }
+
+  .dock-tab--draggable {
+    cursor: grab;
+  }
+
+  .dock-tab--draggable:active {
+    cursor: grabbing;
+  }
+
+  .dock-tab:hover {
+    color: var(--dw-tab-color-hover) !important;
+  }
+
+  .dock-tab--active {
+    font-weight: 700 !important;
+    border-bottom: 1px solid var(--gray-200, #e5e7eb) !important;
+  }
+
+  /* 여러 탭 패널: 비선택 탭은 gray-400 텍스트 */
+  .dock-tab:not(.dock-tab--active):not(:only-child) {
+    color: var(--gray-400, #9ca3af) !important;
+    font-weight: 500;
+  }
+
+  /* 비선택 탭 내부의 extra-left(명수 등) 색상도 동일하게 */
+  .dock-tab:not(.dock-tab--active):not(:only-child) .dock-tab-extra-left,
+  .dock-tab:not(.dock-tab--active):not(:only-child) .dock-tab-extra-left * {
+    color: var(--gray-400, #9ca3af) !important;
+  }
+
+  /* 단일 탭 패널: active font-weight 기본값 유지 */
+  .dock-tab--active:only-child {
+    font-weight: 600;
+    border-bottom: none !important;
+  }
+
+  .dock-tab-extra-left {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding-right: 2px;
+  }
+
+  /* ===== Tab Focused State (based on openedReceptionId) ===== */
+  /* 각 탭 요소에 독립적으로 data-tab-focused 적용 */
+  .dock-tab[data-tab-focused="true"] {
+    background: var(--violet-1, #ede9fe) !important;
+  }
+
+  /* 마지막 탭이 focused일 때만 탭바 전체를 focused 배경으로 채운다.
+     마지막 탭이 아닌 탭이 focused이면 extra 영역까지 색칠되지 않도록 */
+  .dock-tab-bar:has(.dock-tab:last-child[data-tab-focused="true"]) {
+    background: var(--violet-1, #ede9fe);
+  }
+
+  /* 마지막 탭 focused 시 나머지 탭은 기본 탭바 배경 유지 */
+  .dock-tab-bar:has(.dock-tab:last-child[data-tab-focused="true"]) .dock-tab:not([data-tab-focused="true"]) {
+    background: var(--dw-tab-bar-bg) !important;
+  }
+
+  /* 포커스된 탭이 있는 패널: border를 violet-2로 변경 */
+  .dock-panel:has(.dock-tab[data-tab-focused="true"]) {
+    border-color: var(--violet-2, #c4b5fd) !important;
+  }
+
+  /* Focused panel: dropdown button matches focused TabBar bg */
+  .dock-panel:has(.dock-tab[data-tab-focused="true"]) > .dock-tab-bar [data-panel-extra-portal] button {
+    background: transparent;
+  }
+
+  .dock-tab-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dock-tab-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+    color: var(--dw-tab-color);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 150ms, background 150ms;
+    flex-shrink: 0;
+  }
+
+  .dock-tab:hover .dock-tab-close {
+    opacity: 1;
+  }
+
+  .dock-tab-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--dw-tab-color-active);
+  }
+
+  /* ===== Tab Content ===== */
+  .dock-tab-content {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ===== Splitter ===== */
+  .dock-splitter {
+    flex-shrink: 0;
+    background: var(--dw-splitter-bg);
+    transition: background 200ms;
+    z-index: 10;
+  }
+
+  .dock-splitter:hover {
+    background: var(--dw-splitter-bg-hover);
+  }
+
+  .dock-splitter--horizontal {
+    width: var(--dw-splitter-width);
+    cursor: ew-resize;
+  }
+
+  .dock-splitter--vertical {
+    height: var(--dw-splitter-width);
+    cursor: ns-resize;
+  }
+
+  /* ===== Float Panel ===== */
+  .dock-float-panel {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--dw-border-radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  .dock-float-panel--moving {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .dock-float-panel--resizing {
+    user-select: none;
+  }
+
+  .dock-float-header {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    cursor: grab;
+  }
+
+  .dock-float-header:active {
+    cursor: grabbing;
+  }
+
+  .dock-float-header > .dock-panel {
+    border-radius: 0;
+    border: none !important;
+  }
+
+  /* Float close button */
+  .dock-float-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    color: var(--dw-tab-color);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 150ms, color 150ms;
+  }
+
+  .dock-float-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--dw-tab-color-active);
+  }
+
+  /* Float resize handles */
+  .dock-float-resize {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .dock-float-resize--n { top: 0; left: 8px; right: 8px; height: 8px; cursor: ns-resize; }
+  .dock-float-resize--s { bottom: 0; left: 8px; right: 8px; height: 8px; cursor: ns-resize; }
+  .dock-float-resize--e { top: 8px; right: 0; bottom: 8px; width: 8px; cursor: ew-resize; }
+  .dock-float-resize--w { top: 8px; left: 0; bottom: 8px; width: 8px; cursor: ew-resize; }
+  .dock-float-resize--ne { top: 0; right: 0; width: 8px; height: 8px; cursor: nesw-resize; }
+  .dock-float-resize--nw { top: 0; left: 0; width: 8px; height: 8px; cursor: nwse-resize; }
+  .dock-float-resize--se { bottom: 0; right: 0; width: 8px; height: 8px; cursor: nwse-resize; }
+  .dock-float-resize--sw { bottom: 0; left: 0; width: 8px; height: 8px; cursor: nesw-resize; }
+}
+
+/* =========================================================
+   Portal 컴포넌트 스타일 (document.body에 렌더링되므로 nesting 불가)
+   이 클래스들은 rc-dock 과 충돌하지 않으므로 그대로 유지
+   ========================================================= */
+
+/* ===== Dock Preview Indicator ===== */
+.dock-preview-indicator {
+  background: var(--dw-preview-bg);
+  border: 2px solid var(--dw-preview-border);
+  border-radius: 4px;
+}
+
+/* ===== Drag Overlay (Panel Frame) ===== */
+.dock-drag-overlay-frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--dw-panel-bg);
+  border: 1px solid var(--dw-panel-border);
+  border-radius: var(--dw-border-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+  overflow: hidden;
+}
+
+.dock-drag-overlay-tab-bar {
+  display: flex;
+  align-items: center;
+  height: var(--dw-tab-height);
+  min-height: var(--dw-tab-height);
+  background: var(--dw-tab-bar-bg);
+  border-bottom: 1px solid var(--dw-panel-border);
+}
+
+.dock-drag-overlay-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 100%;
+  font-size: var(--dw-font-size);
+  color: var(--dw-tab-color-active);
+  font-weight: 500;
+  border-bottom: 2px solid var(--dw-tab-color-active);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dock-drag-overlay-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ===== Dock Target Indicators ===== */
+.dock-target-indicator-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 9997;
+  pointer-events: none;
+}
+
+.dock-target-indicator-btn {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  pointer-events: auto;
+  transition: background 100ms, border-color 100ms, color 100ms, box-shadow 100ms;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dock-target-indicator-btn:hover,
+.dock-target-indicator-btn--active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.8);
+  color: #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+/* ===== Content Drag Overlay ===== */
+.dock-content-drag-overlay {
+  background: var(--dw-panel-bg);
+  border: 1px solid var(--dw-panel-border);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: var(--dw-font-size);
+  color: var(--dw-tab-color-active);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+/* ===== Content Drop Zone ===== */
+.dock-content-drop-zone--active {
+  outline: 2px dashed rgba(59, 130, 246, 0.5);
+  outline-offset: -2px;
+  background: rgba(59, 130, 246, 0.05);
+}

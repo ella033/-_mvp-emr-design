@@ -1,0 +1,56 @@
+/* Spoqa Han Sans Neo 폰트 - 로컬 */
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/spoqa-han-sans-neo/SpoqaHanSansNeo-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/fonts/spoqa-han-sans-neo/SpoqaHanSansNeo-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/spoqa-han-sans-neo/SpoqaHanSansNeo-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 300;
+  font-style: normal;
+  src: url('/fonts/spoqa-han-sans-neo/SpoqaHanSansNeo-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 100;
+  font-style: normal;
+  src: url('/fonts/spoqa-han-sans-neo/SpoqaHanSansNeo-Thin.woff2') format('woff2');
+}
+
+/* 공지 슬라이딩 애니메이션 - 부드러운 연속 흐름 */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+/* 환자 카드 등장 애니메이션 */
+@keyframes cardFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-card-enter {
+  animation: cardFadeIn 0.3s ease-out;
+}

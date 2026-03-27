@@ -1,0 +1,205 @@
+<div class="text-center mb-6">
+  <h1 class="text-2xl font-bold">{{hospitalName}}</h1>
+  <p class="text-sm">{{hospitalAddress}}</p>
+  <p class="text-sm">TEL: {{hospitalPhone}} | FAX: {{hospitalFax}}</p>
+</div>
+
+<div class="text-center mb-8">
+  <h2 class="text-xl font-bold">의료진 소견서</h2>
+  <p class="text-sm">Medical Opinion Report</p>
+</div>
+
+<div class="mb-6">
+  <table class="w-full">
+    <tr>
+      <td class="w-1/4 font-bold">환자명</td>
+      <td class="w-1/4">{{patientName}} ({{patientGender}})</td>
+      <td class="w-1/4 font-bold">생년월일</td>
+      <td class="w-1/4">{{patientBirthDate}}</td>
+    </tr>
+    <tr>
+      <td class="font-bold">환자등록번호</td>
+      <td>{{patientId}}</td>
+      <td class="font-bold">진료일</td>
+      <td>{{visitDate}}</td>
+    </tr>
+    <tr>
+      <td class="font-bold">담당의</td>
+      <td>{{doctorName}}</td>
+      <td class="font-bold">진료과</td>
+      <td>{{department}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">주요 증상 및 병력</h3>
+  <div class="border p-4 bg-gray-50">
+    <p><strong>주요 증상:</strong> {{mainSymptoms}}</p>
+    <p><strong>발병일:</strong> {{onsetDate}}</p>
+    <p><strong>과거 병력:</strong> {{pastHistory}}</p>
+    <p><strong>가족 병력:</strong> {{familyHistory}}</p>
+    <p><strong>복용 약물:</strong> {{currentMedications}}</p>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">신체 검사</h3>
+  <table class="w-full">
+    <tr>
+      <td class="w-1/4 font-bold">혈압</td>
+      <td class="w-1/4">{{bloodPressure}} mmHg</td>
+      <td class="w-1/4 font-bold">맥박</td>
+      <td class="w-1/4">{{pulse}} /min</td>
+    </tr>
+    <tr>
+      <td class="font-bold">체온</td>
+      <td>{{temperature}} °C</td>
+      <td class="font-bold">호흡수</td>
+      <td>{{respiration}} /min</td>
+    </tr>
+    <tr>
+      <td class="font-bold">신장</td>
+      <td>{{height}} cm</td>
+      <td class="font-bold">체중</td>
+      <td>{{weight}} kg</td>
+    </tr>
+    <tr>
+      <td class="font-bold">BMI</td>
+      <td>{{bmi}}</td>
+      <td class="font-bold">체중 변화</td>
+      <td>{{weightChange}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">검사 결과</h3>
+  <div class="space-y-3">
+    <div>
+      <h4 class="font-semibold">혈액 검사</h4>
+      <table class="w-full text-sm">
+        <tr>
+          <td class="w-1/4">헤모글로빈</td>
+          <td class="w-1/4">{{hemoglobin}} g/dL</td>
+          <td class="w-1/4">백혈구</td>
+          <td class="w-1/4">{{whiteBloodCell}} /μL</td>
+        </tr>
+        <tr>
+          <td>혈소판</td>
+          <td>{{platelet}} /μL</td>
+          <td>혈당</td>
+          <td>{{bloodSugar}} mg/dL</td>
+        </tr>
+        <tr>
+          <td>총 콜레스테롤</td>
+          <td>{{totalCholesterol}} mg/dL</td>
+          <td>중성지방</td>
+          <td>{{triglyceride}} mg/dL</td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <h4 class="font-semibold">영상 검사</h4>
+      <p><strong>흉부 X-ray:</strong> {{chestXray}}</p>
+      <p><strong>복부 초음파:</strong> {{abdominalUltrasound}}</p>
+      <p><strong>CT/MRI:</strong> {{ctMri}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">진단</h3>
+  <div class="border p-4">
+    <p><strong>주진단:</strong> {{primaryDiagnosis}}</p>
+    <p><strong>부진단:</strong> {{secondaryDiagnosis}}</p>
+    <p><strong>ICD-10 코드:</strong> {{icd10Code}}</p>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">치료 계획</h3>
+  <div class="space-y-3">
+    <div>
+      <h4 class="font-semibold">처방 약물</h4>
+      <table class="w-full">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="text-left p-2">약물명</th>
+            <th class="text-center p-2">용량</th>
+            <th class="text-center p-2">횟수</th>
+            <th class="text-center p-2">일수</th>
+            <th class="text-left p-2">복용법</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-2">{{medication1}}</td>
+            <td class="text-center p-2">{{dose1}}</td>
+            <td class="text-center p-2">{{frequency1}}</td>
+            <td class="text-center p-2">{{days1}}</td>
+            <td class="p-2">{{instruction1}}</td>
+          </tr>
+          <tr>
+            <td class="p-2">{{medication2}}</td>
+            <td class="text-center p-2">{{dose2}}</td>
+            <td class="text-center p-2">{{frequency2}}</td>
+            <td class="text-center p-2">{{days2}}</td>
+            <td class="p-2">{{instruction2}}</td>
+          </tr>
+          <tr>
+            <td class="p-2">{{medication3}}</td>
+            <td class="text-center p-2">{{dose3}}</td>
+            <td class="text-center p-2">{{frequency3}}</td>
+            <td class="text-center p-2">{{days3}}</td>
+            <td class="p-2">{{instruction3}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h4 class="font-semibold">생활 지침</h4>
+      <ul class="list-disc list-inside space-y-1">
+        <li>{{lifestyleGuidance1}}</li>
+        <li>{{lifestyleGuidance2}}</li>
+        <li>{{lifestyleGuidance3}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">추가 권고사항</h3>
+  <div class="border p-4 bg-yellow-50">
+    <p><strong>재진 예약:</strong> {{followUpDate}}</p>
+    <p><strong>추가 검사:</strong> {{additionalTests}}</p>
+    <p><strong>주의사항:</strong> {{precautions}}</p>
+    <p><strong>응급상황 시 연락처:</strong> {{emergencyContact}}</p>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h3 class="font-bold mb-3">의료진 소견</h3>
+  <div class="border p-4 min-h-32">
+    <p>{{medicalOpinion}}</p>
+  </div>
+</div>
+
+<div class="flex justify-between items-end mt-8">
+  <div>
+    <p class="text-sm">작성일: {{reportDate}}</p>
+    <p class="text-sm">작성자: {{doctorName}} ({{doctorLicense}})</p>
+  </div>
+  <div class="text-center">
+    <p class="text-sm mb-2">의사 서명</p>
+    <div class="border-b border-black w-32 h-8"></div>
+    <p class="text-sm mt-1">{{doctorName}}</p>
+  </div>
+</div>
+
+<div class="text-center text-xs text-gray-500 mt-4">
+  <p>본 소견서는 의료진의 전문적 판단에 기반한 의견이며, 환자의 상태에 따라 변경될 수 있습니다.</p>
+  <p>문의사항이 있으시면 언제든지 연락주시기 바랍니다.</p>
+</div>
